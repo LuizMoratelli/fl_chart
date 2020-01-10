@@ -10,6 +10,7 @@ import 'pie_chart.dart';
 
 /// Holds all data needed to draw [PieChart],
 class PieChartData extends BaseChartData {
+  final int selectedIndex;
   final List<PieChartSectionData> sections;
   final double centerSpaceRadius;
   final Color centerSpaceColor;
@@ -27,6 +28,7 @@ class PieChartData extends BaseChartData {
   double sumValue;
 
   PieChartData({
+    this.selectedIndex = -1,
     this.sections = const [],
     this.centerSpaceRadius = 80,
     this.centerSpaceColor = Colors.transparent,
@@ -46,10 +48,12 @@ class PieChartData extends BaseChartData {
       return PieChartData(
         borderData: FlBorderData.lerp(a.borderData, b.borderData, t),
         centerSpaceColor: Color.lerp(a.centerSpaceColor, b.centerSpaceColor, t),
-        centerSpaceRadius: lerpDouble(a.centerSpaceRadius, b.centerSpaceRadius, t),
+        centerSpaceRadius:
+            lerpDouble(a.centerSpaceRadius, b.centerSpaceRadius, t),
         pieTouchData: b.pieTouchData,
         sectionsSpace: lerpDouble(a.sectionsSpace, b.sectionsSpace, t),
-        startDegreeOffset: lerpDouble(a.startDegreeOffset, b.startDegreeOffset, t),
+        startDegreeOffset:
+            lerpDouble(a.startDegreeOffset, b.startDegreeOffset, t),
         sections: lerpPieChartSectionDataList(a.sections, b.sections, t),
       );
     } else {
@@ -72,7 +76,7 @@ class PieChartSectionData {
   final double radius;
   final bool showTitle;
   final TextStyle titleStyle;
-  final String title;
+  final String title, labelOnSelected;
 
   /// the [titlePositionPercentageOffset] is the place of showing title on the section
   /// the degree is statically on the center of each section,
@@ -91,6 +95,7 @@ class PieChartSectionData {
     this.titleStyle = const TextStyle(
         color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
     this.title = '1',
+    this.labelOnSelected = '',
     this.titlePositionPercentageOffset = 0.5,
   });
 
@@ -101,6 +106,7 @@ class PieChartSectionData {
     bool showTitle,
     TextStyle titleStyle,
     String title,
+    String labelOnSelected,
     double titlePositionPercentageOffset,
   }) {
     return PieChartSectionData(
@@ -110,18 +116,22 @@ class PieChartSectionData {
       showTitle: showTitle ?? this.showTitle,
       titleStyle: titleStyle ?? this.titleStyle,
       title: title ?? this.title,
+      labelOnSelected: labelOnSelected ?? this.labelOnSelected,
       titlePositionPercentageOffset:
           titlePositionPercentageOffset ?? this.titlePositionPercentageOffset,
     );
   }
 
-  static PieChartSectionData lerp(PieChartSectionData a, PieChartSectionData b, double t) {
+  static PieChartSectionData lerp(
+      PieChartSectionData a, PieChartSectionData b, double t) {
     return PieChartSectionData(
       color: Color.lerp(a.color, b.color, t),
       radius: lerpDouble(a.radius, b.radius, t),
       showTitle: b.showTitle,
       title: b.title,
-      titlePositionPercentageOffset: lerpDouble(a.titlePositionPercentageOffset, b.titlePositionPercentageOffset, t),
+      labelOnSelected: b.labelOnSelected,
+      titlePositionPercentageOffset: lerpDouble(
+          a.titlePositionPercentageOffset, b.titlePositionPercentageOffset, t),
       titleStyle: TextStyle.lerp(a.titleStyle, b.titleStyle, t),
       value: lerpDouble(a.value, b.value, t),
     );
@@ -130,10 +140,9 @@ class PieChartSectionData {
 
 /// holds data for handling touch events on the [PieChart]
 class PieTouchData extends FlTouchData {
-
   /// you can implement it to receive touches callback
   final Function(PieTouchResponse) touchCallback;
-  
+
   const PieTouchData({
     bool enabled = true,
     bool enableNormalTouch = true,
@@ -166,10 +175,9 @@ class PieTouchResponse extends BaseTouchResponse {
 }
 
 class PieChartDataTween extends Tween<PieChartData> {
-
-  PieChartDataTween({PieChartData begin, PieChartData end}) : super(begin: begin, end: end);
+  PieChartDataTween({PieChartData begin, PieChartData end})
+      : super(begin: begin, end: end);
 
   @override
   PieChartData lerp(double t) => begin.lerp(begin, end, t);
-
 }
