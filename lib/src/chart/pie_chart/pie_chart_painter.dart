@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:vanna/widgets/fl_chart/fl_chart.dart';
-import 'package:vanna/widgets/fl_chart/src/chart/base/base_chart/base_chart_painter.dart';
-import 'package:vanna/widgets/fl_chart/src/utils/utils.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:fl_chart/src/chart/base/base_chart/base_chart_painter.dart';
+import 'package:fl_chart/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
