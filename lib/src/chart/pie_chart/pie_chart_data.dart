@@ -11,6 +11,8 @@ import 'pie_chart.dart';
 /// Holds all data needed to draw [PieChart],
 class PieChartData extends BaseChartData {
   final int selectedIndex;
+  final double labelSize;
+  final Color labelColor;
   final List<PieChartSectionData> sections;
   final double centerSpaceRadius;
   final Color centerSpaceColor;
@@ -29,6 +31,8 @@ class PieChartData extends BaseChartData {
 
   PieChartData({
     this.selectedIndex = -1,
+    this.labelSize = 14,
+    this.labelColor = const Color(0xff888995),
     this.sections = const [],
     this.centerSpaceRadius = 80,
     this.centerSpaceColor = Colors.transparent,

@@ -47,15 +47,16 @@ class PieChartPainter extends BaseChartPainter<PieChartData>
     }
 
     sectionsAngle = _calculateSectionsAngle(data.sections, data.sumValue);
-    print(data);
-    if (targetData != null) print(targetData);
 
     drawCenterSpace(canvas, size);
     drawSections(canvas, size, sectionsAngle);
     drawTexts(canvas, size);
-    if (data.selectedIndex >= 0) {
+    if (data.selectedIndex != null && data.selectedIndex >= 0) {
       drawLabel(
-          canvas, size, data.sections[data.selectedIndex].labelOnSelected);
+        canvas,
+        size,
+        data.sections[data.selectedIndex].labelOnSelected,
+      );
     }
   }
 
@@ -82,8 +83,8 @@ class PieChartPainter extends BaseChartPainter<PieChartData>
       textAlign: TextAlign.center,
     );
     final textStyle = ui.TextStyle(
-      color: Colors.black,
-      fontSize: 20,
+      color: data.labelColor,
+      fontSize: data.labelSize,
     );
     final paragraphBuilder = ui.ParagraphBuilder(paragraphStyle)
       ..pushStyle(textStyle)
@@ -243,7 +244,7 @@ class PieChartPainter extends BaseChartPainter<PieChartData>
     double tempAngle = data.startDegreeOffset;
     for (int i = 0; i < data.sections.length; i++) {
       final section = data.sections[i];
-      double sectionAngle = sectionsAngle[i];
+      double sectionAngle = sectionsAngle == null ? 0 : sectionsAngle[i];
 
       tempAngle %= 360;
       sectionAngle %= 360;
