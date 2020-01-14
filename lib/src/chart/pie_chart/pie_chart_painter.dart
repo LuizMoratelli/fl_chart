@@ -51,13 +51,14 @@ class PieChartPainter extends BaseChartPainter<PieChartData>
     drawCenterSpace(canvas, size);
     drawSections(canvas, size, sectionsAngle);
     drawTexts(canvas, size);
-    if (data.selectedIndex != null && data.selectedIndex >= 0) {
-      drawLabel(
-        canvas,
-        size,
-        data.sections[data.selectedIndex].labelOnSelected,
-      );
-    }
+
+    drawLabel(
+      canvas,
+      size,
+      data.selectedIndex != null && data.selectedIndex >= 0
+          ? data.sections[data.selectedIndex].labelOnSelected
+          : data.defaultLabel,
+    );
   }
 
   List<double> _calculateSectionsAngle(

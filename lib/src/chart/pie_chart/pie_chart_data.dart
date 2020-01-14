@@ -10,6 +10,7 @@ import 'pie_chart.dart';
 
 /// Holds all data needed to draw [PieChart],
 class PieChartData extends BaseChartData {
+  final String defaultLabel;
   final int selectedIndex;
   final double labelSize;
   final Color labelColor;
@@ -30,6 +31,7 @@ class PieChartData extends BaseChartData {
   double sumValue;
 
   PieChartData({
+    this.defaultLabel = '',
     this.selectedIndex = -1,
     this.labelSize = 14,
     this.labelColor = const Color(0xff888995),
